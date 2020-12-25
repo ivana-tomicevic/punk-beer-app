@@ -1,0 +1,178 @@
+body {
+  margin: 0 auto;
+  background-color: rgb(255, 252, 232);
+}
+p {
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.header {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  color: rgb(14, 13, 13);
+  width: 100%;
+}
+
+.description {
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  color: rgb(24, 23, 23);
+  font-weight: bolder;
+  font-size: 12px;
+}
+
+img {
+  width: 40px;
+  height: 160px;
+  display: flex;
+  padding: 0 7rem;
+  cursor: pointer;
+  max-height: max-content;
+  padding-bottom: 4px;
+}
+
+.scroll {
+  width: 100%;
+  margin: 0 auto;
+  padding: 5rem 0;
+  display: flex;
+  background-image: url("../images/back.jpg");
+}
+
+.btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: rgb(157, 227, 255);
+  padding: 14px 1rem;
+  border-radius: 2rem;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+}
+
+.discover {
+  font-family: "Open Sans", sans-serif;
+  line-height: 2.5rem;
+  font-size: 1rem;
+  display: block;
+}
+
+.details {
+  display: flex;
+}
+
+.random_products {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 1.5em;
+  border-radius: 2rem;
+  background-color: rgb(243, 216, 140);
+  padding: 4px 6rem;
+  margin-right: 1rem;
+}
+
+.products {
+  background-color: rgba(90, 58, 36, 0.705);
+  border-radius: 2rem;
+  outline: none;
+  margin: 0.55em;
+  box-shadow: 0 0 13px rgba(56, 56, 56, 0.2);
+}
+
+.products:hover {
+  box-shadow: 0 0 11px rgba(53, 53, 53, 0.2);
+}
+.random {
+  margin: 0 auto;
+  width: 55%;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+.random_items {
+  display: flex;
+}
+
+.navbar--link {
+  align-items: right;
+  justify-content: space-between;
+  list-style-type: none;
+  width: 100%;
+  text-decoration: none;
+}
+
+.navbar {
+  background-color: rgb(17, 17, 17);
+  padding: 0.5rem;
+  text-decoration: none;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 0;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.icon {
+  padding-right: 4px;
+}
+
+.navbar * {
+  margin-left: 1rem;
+  display: inline;
+  text-decoration: none;
+  color: rgb(255, 242, 224);
+  justify-content: space-between;
+}
+.navbar ul {
+  justify-content: space-between;
+}
+
+.navbar li {
+  font-size: 20px;
+}
+
+.heart {
+  font-size: 1.8rem;
+  margin-right: 5px;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.random_image {
+  height: 10rem;
+  width: 10rem;
+}
+
+.random_items {
+  display: flex;
+}
+
+.arrow {
+  border: none;
+  background: none;
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+  margin-right: 1em;
+}
+
+select {
+  list-style-type: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  float: right;
+  margin-right: 3rem;
+  margin-top: 4px;
+  background-color: transparent;
+  outline: none;
+  border-radius: 2rem;
+  text-align: center;
+  padding: 2px 1px;
+  border-color: rgb(37, 36, 33);
+}
+option {
+  color: black !important;
+  padding: 2em !important;
+}
