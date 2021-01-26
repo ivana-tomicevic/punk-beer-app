@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import BeerList from "./components/BeerList";
-import RandomBeer from "./components/RandomBeer";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import "./css/Main.css";
-import { fetchBeerList, fetchRandomBeer } from "./services/api";
-
-import SortBy from "./components/SortBy";
+import BeerList from "./components/BeerList/BeerList";
+import fire from "./Firebase";
+import Login from "./components/LoginPage/Login";
+import Navbar from "./components/Header/Navbar";
+import { fetchBeerList } from "./services/api";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
   const [beerList, setBeerList] = useState([]);
-  const [sortBeers, setSortBeers] = useState([]);
-  const [sortByTerm, setSortByTerm] = useState("Light Beers");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [random, setRandom] = useState([]);
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [hasAccount, setHasAccount] = useState(false);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     const getBeers = async () => {
@@ -23,70 +25,122 @@ function App() {
     getBeers();
   }, []);
 
-  const getRandomBeer = (e) => {
+  const handleClickSearch = (e) => {
     e.preventDefault();
-    fetchRandomBeer().then(({ data }) => {
-      setRandom(data);
+    fetch(`https://api.punkapi.com/v2/beers?beer_name=${query}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.errors) {
+          setBeerList(data);
+        } else {
+          setBeerList([]);
+        }
+      });
+  };
+
+  const onChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const clearInputs = () => {
+    setEmail("");
+    setPassword("");
+  };
+
+  const clearErrors = () => {
+    setEmailError("");
+    setPasswordError("");
+  };
+
+  const handleLogin = () => {
+    clearErrors();
+    fire
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((err) => {
+        switch (err.code) {
+          case "auth/invalid-email":
+          case "auth/user-disabled":
+          case "auth/user-not-found":
+            setEmailError(err.code);
+            break;
+          case "auth/wrong-password":
+            setPasswordError(err.message);
+            break;
+          default:
+        }
+      });
+  };
+
+  const handleSignUp = () => {
+    clearErrors();
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch((err) => {
+        switch (err.code) {
+          case "auth/email-already-in-use":
+          case "auth/invalid-email":
+            setEmailError(err.code);
+            break;
+          case "auth/weak-password":
+            setPasswordError(err.message);
+            break;
+          default:
+        }
+      });
+  };
+
+  const handleLogOut = () => {
+    fire.auth().signOut();
+  };
+
+  const authListener = () => {
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        clearInputs();
+        setUser(user);
+      } else {
+        setUser("");
+      }
     });
   };
 
-  const onSortBy = (e) => {
-    let option = e.target.value;
-    let sortedBeers = beerList.sort((a, b) => {
-      return option === "Strong Beers"
-        ? a.abv > b.abv
-          ? -1
-          : 1
-        : a.abv < b.abv
-        ? -1
-        : 1;
-    });
-    setSortBeers(sortedBeers);
-    setSortByTerm(option);
-  };
-
-  const handleClick = () => {
-    setModalIsOpen(true);
-  };
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  useEffect(() => {
+    authListener();
+  });
 
   return (
-    <Router>
-      <div className="App">
-        <nav className="navbar">
-          <ul>
-            <Link to="/">
-              <h1 style={{ fontSize: "2rem" }}>Lager than life</h1>
-            </Link>
-            <li>
-              <Link to="/random">Random Beer</Link>
-            </li>
-            <li>
-              <Link to="/fav">My Beers</Link>
-            </li>
-            <SortBy onSortBy={onSortBy} sortByTerm={sortByTerm} />
-          </ul>
-        </nav>
-      </div>
-      <Switch>
-        <Route exact path="/">
-          <BeerList
-            beerList={beerList}
-            modalIsOpen={modalIsOpen}
-            closeModal={closeModal}
-            handleClick={handleClick}
-            sortBeers={sortBeers}
+    <div>
+      <Router>
+        {user ? (
+          <>
+            <Route exact path="/">
+              <Navbar
+                handleLogOut={handleLogOut}
+                handleClickSearch={handleClickSearch}
+                query={query}
+                onChange={onChange}
+              />
+              <BeerList beerList={beerList} />
+            </Route>
+          </>
+        ) : (
+          <Login
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            handleSignUp={handleSignUp}
+            hasAccount={hasAccount}
+            setHasAccount={setHasAccount}
+            emailError={emailError}
+            passwordError={passwordError}
           />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/random">
-          <RandomBeer getRandomBeer={getRandomBeer} random={random} />
-        </Route>
-      </Switch>
-    </Router>
+        )}
+      </Router>
+    </div>
   );
 }
 
