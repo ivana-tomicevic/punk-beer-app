@@ -2,32 +2,42 @@ import React from "react";
 import { Button, AppBar, Toolbar, Typography } from "@material-ui/core";
 import Search from "./Search";
 import { useStyles } from "../../utils";
+import PropTypes from "prop-types";
 
-export default function Navbar({
-  handleLogOut,
-  onChange,
-  handleClickSearch,
-  query,
-}) {
+const Navbar = ({ handleLogOut, onChange, handleClickSearch, query }) => {
   const classes = useStyles();
 
   return (
-    <AppBar color="primary">
+    <AppBar
+      height="25%"
+      color="default"
+      elevation={1}
+      style={{ backgroundColor: "white" }}
+    >
       <Toolbar className={classes.appbar}>
-        <Typography variant="h6">React Beer App</Typography>
+        <Typography variant="h6">Beers</Typography>
         <Search
           onChange={onChange}
           handleClickSearch={handleClickSearch}
           query={query}
         />
         <Button
-          color="inherit"
+          variant="outlined"
           onClick={handleLogOut}
-          style={{ textTransform: "none" }}
+          className={classes.button}
         >
-          Logout
+          Sign Out
         </Button>
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+Navbar.propTypes = {
+  handleLogOut: PropTypes.func,
+  handleClickSearch: PropTypes.func,
+  onChange: PropTypes.func,
+  query: PropTypes.string,
+};
+
+export default Navbar;

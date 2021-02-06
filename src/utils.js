@@ -11,28 +11,36 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   card: {
-    width: "280px",
-    height: "340px",
+    width: "300px",
+    height: "300px",
     padding: "4px",
     cursor: "pointer",
-    "&:hover": {
-      boxShadow: " 1px 10px 20px grey",
-    },
   },
   cards: {
     padding: "2rem",
   },
+  cardContent: {
+    textAlign: "center",
+    wordWrap: "break-word",
+    fontFamily: "Open Sans, 'sans-serif'",
+  },
+  button: {
+    textTransform: "none",
+    fontSize: "12px",
+    borderRadius: "15px",
+  },
   search: {
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    borderRadius: "8px",
+    backgroundColor: " #f8f8ff",
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.white),
     },
+    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(0),
+      marginLeft: theme.spacing(3),
       width: "auto",
     },
   },
@@ -44,20 +52,19 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    color: "grey",
   },
   inputRoot: {
     color: "inherit",
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1, 4, 1, 0),
+    fontSize: "12px",
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "40ch",
-      "&:focus": {
-        width: "50ch",
-      },
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
   },
 }));

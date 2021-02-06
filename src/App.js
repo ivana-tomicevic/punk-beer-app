@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./index.css";
 import BeerList from "./components/BeerList/BeerList";
 import fire from "./Firebase";
 import Login from "./components/LoginPage/Login";
 import Navbar from "./components/Header/Navbar";
-import { fetchBeerList } from "./services/api";
+import { fetchBeerList, fetchBeer } from "./services/api";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
     const getBeers = async () => {
@@ -25,18 +29,24 @@ function App() {
     getBeers();
   }, []);
 
-  const handleClickSearch = (e) => {
-    e.preventDefault();
-    fetch(`https://api.punkapi.com/v2/beers?beer_name=${query}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.errors) {
-          setBeerList(data);
-        } else {
-          setBeerList([]);
-        }
-      });
+  const fetchMoreBeers = () => {
+    setPage(page + 1);
+    axios.get(`https://api.punkapi.com/v2/beers?page=${page}`).then((res) => {
+      setBeerList(beerList.concat(res.data));
+    });
   };
+
+  useEffect(() => {
+    const searchBeers = async () => {
+      await fetchBeer();
+      setResults(
+        beerList.filter((beer) =>
+          beer.name.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    };
+    searchBeers();
+  }, [beerList, query]);
 
   const onChange = (e) => {
     setQuery(e.target.value);
@@ -118,11 +128,10 @@ function App() {
             <Route exact path="/">
               <Navbar
                 handleLogOut={handleLogOut}
-                handleClickSearch={handleClickSearch}
                 query={query}
                 onChange={onChange}
               />
-              <BeerList beerList={beerList} />
+              <BeerList results={results} fetchMoreBeers={fetchMoreBeers} />
             </Route>
           </>
         ) : (

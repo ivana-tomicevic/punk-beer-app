@@ -24,15 +24,21 @@ const Login = (props) => {
   } = props;
 
   const paperStyle = {
-    padding: 20,
-    height: "70vh",
-    margin: "40px auto",
+    paper: {
+      padding: 20,
+      height: "70vh",
+      margin: "40px auto",
+    },
+    button: {
+      textTransform: "none",
+      backgroundColor: "#757de8",
+    },
   };
 
   return (
     <Grid container align="center" justify="center">
       <Container component="main" maxWidth="xs">
-        <Paper elevation={10} style={paperStyle}>
+        <Paper elevation={10} style={paperStyle.paper}>
           <Typography component="h1" variant="h5">
             Beer App
           </Typography>
@@ -70,7 +76,7 @@ const Login = (props) => {
                     fullWidth
                     color="primary"
                     onClick={handleLogin}
-                    style={{ textTransform: "none" }}
+                    style={paperStyle.button}
                   >
                     Sign In
                   </Button>
@@ -86,7 +92,7 @@ const Login = (props) => {
               ) : (
                 <>
                   <Button
-                    style={{ textTransform: "none" }}
+                    style={paperStyle.button}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -112,5 +118,7 @@ const Login = (props) => {
     </Grid>
   );
 };
+
+Login.propTypes = {};
 
 export default Login;

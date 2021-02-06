@@ -1,38 +1,53 @@
 import React from "react";
-import { CardContent, Typography, Dialog, Button } from "@material-ui/core";
+import {
+  CardContent,
+  Typography,
+  Dialog,
+  DialogTitle,
+  CardMedia,
+} from "@material-ui/core";
+import PropTypes from "prop-types";
 
 const BeerItem = ({ selected, open, handleClose }) => {
+  const beer = {
+    padding: "0 2rem",
+    float: "left",
+    height: "auto",
+    maxHeight: " 380px",
+    width: "auto",
+    maxWidth: "400px",
+  };
+
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle onClose={handleClose}>{selected.name}</DialogTitle>
       <CardContent>
-        <img
-          src={selected.image_url}
-          alt={selected.name}
-          style={{
-            padding: "0 2rem",
-            float: "left",
-            height: "auto",
-            maxHeight: " 380px",
-            width: "auto",
-            maxWidth: "400px",
-          }}
-        />
-        <Typography variant="h3" component="h1" gutterBottom>
-          {selected.name}
-        </Typography>
+        <CardMedia>
+          <img src={selected.image_url} alt={selected.name} style={beer} />
+        </CardMedia>
+
         <Typography variant="h5" gutterBottom>
-          ABV: {selected.abv}%
+          ABV: {selected.abv} %
         </Typography>
-        <Typography variant="overline" gutterBottom>
+        <Typography
+          gutterBottom
+          variant="overline"
+          color="textSecondary"
+          display="block"
+        >
           {selected.tagline}
         </Typography>
-        <Typography variant="caption" gutterBottom>
-          {selected.description}
-        </Typography>
+        <Typography variant="caption">{selected.description}</Typography>
+        <Typography variant="body2">{selected.brewers_tips}</Typography>
       </CardContent>
-      <Button onClick={handleClose}>Close</Button>
     </Dialog>
   );
+};
+
+BeerItem.propTypes = {
+  selected: PropTypes.object,
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
 };
 
 export default BeerItem;
