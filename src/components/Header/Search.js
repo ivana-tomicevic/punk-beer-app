@@ -21,7 +21,6 @@ const Search = ({ query, onChange }) => {
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
-          inputProps={{ "aria-label": "search" }}
         />
       </div>
     </form>
