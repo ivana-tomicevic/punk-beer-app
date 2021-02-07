@@ -8,6 +8,7 @@ import {
   Paper,
   TextField,
 } from "@material-ui/core";
+import "../../index.css";
 
 const Login = (props) => {
   const {
@@ -25,9 +26,10 @@ const Login = (props) => {
 
   const paperStyle = {
     paper: {
-      padding: 20,
-      height: "70vh",
-      margin: "40px auto",
+      padding: "20px",
+      height: "80vh",
+      margin: "20px auto",
+      fontFamily: "Open Sans, 'sans-serif'",
     },
     button: {
       textTransform: "none",
@@ -38,15 +40,15 @@ const Login = (props) => {
   return (
     <Grid container align="center" justify="center">
       <Container component="main" maxWidth="xs">
-        <Paper elevation={10} style={paperStyle.paper}>
+        <Paper elevation={3} style={paperStyle.paper}>
           <Typography component="h1" variant="h5">
             Beer App
           </Typography>
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={(e) => e.preventDefault()} style={paperStyle.paper}>
             <TextField
               margin="normal"
-              fullWidth
               id="email"
+              fullWidth
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -57,7 +59,7 @@ const Login = (props) => {
             <p>{emailError}</p>
             <TextField
               margin="normal"
-              fullWidth
+              fullWidth="2"
               name="password"
               label="Password"
               type="password"
@@ -73,8 +75,8 @@ const Login = (props) => {
                   <Button
                     type="submit"
                     variant="contained"
-                    fullWidth
                     color="primary"
+                    fullWidth
                     onClick={handleLogin}
                     style={paperStyle.button}
                   >
@@ -101,7 +103,7 @@ const Login = (props) => {
                   >
                     Sign Up
                   </Button>
-                  <p>
+                  <p className="p">
                     Have an account?
                     <span onClick={() => setHasAccount(!hasAccount)}>
                       <Link href="#" variant="body2">

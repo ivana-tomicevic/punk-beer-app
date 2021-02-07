@@ -14,7 +14,6 @@ export const useStyles = makeStyles(
     card: {
       width: "300px",
       height: "300px",
-      padding: "4px",
       cursor: "pointer",
     },
     cards: {
@@ -27,7 +26,7 @@ export const useStyles = makeStyles(
     },
     button: {
       textTransform: "none",
-      fontSize: "12px",
+      fontSize: "10px",
       borderRadius: "15px",
     },
     search: {

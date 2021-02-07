@@ -5,3 +5,7 @@ body {
   padding: 0;
   background-color: #f8f8ff;
 }
+
+p {
+  font-family: "Open Sans, 'sans-serif'";
+}
