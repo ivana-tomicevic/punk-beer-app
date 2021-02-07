@@ -1,1 +1,1 @@
-https://react-punkapi-app.netlify.app/
+https://beers-punkapi.netlify.app/
